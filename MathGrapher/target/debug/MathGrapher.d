@@ -1,0 +1,1 @@
+C:\Users\craaz\OneDrive\Documents\A-LegitimateCodeStuffs\MathGrapherEtc\MathGrapher\target\debug\MathGrapher.exe: C:\Users\craaz\OneDrive\Documents\A-LegitimateCodeStuffs\MathGrapherEtc\MathGrapher\src\general_shapes.rs C:\Users\craaz\OneDrive\Documents\A-LegitimateCodeStuffs\MathGrapherEtc\MathGrapher\src\main.rs
