@@ -2,7 +2,7 @@ mod general_shapes;
 
 use std::f32::consts::PI;
 
-use macroquad::prelude::*;
+use macroquad::{input::KeyCode::LeftShift, prelude::*};
 
 fn spherical_to_cartesian(radius: f32, theta: f32, phi: f32) -> Vec3 {
     return vec3(
@@ -12,11 +12,15 @@ fn spherical_to_cartesian(radius: f32, theta: f32, phi: f32) -> Vec3 {
     )
 }
 
+fn to_xzy(vec: Vec3) -> Vec3 {
+    return vec.xzy();
+}
+
 #[macroquad::main("Testerrrrrr")]
 async fn main() {
     let mut radius = 35.0;
-    let theta = 1.0;
-    let phi = 1.0;
+    let mut theta = 1.0;
+    let mut phi = 1.0;
 
     loop {
         clear_background(WHITE);
@@ -25,8 +29,13 @@ async fn main() {
             radius += 0.5 * -mouse_wheel().1.signum();
         }
 
+        if is_mouse_button_down(MouseButton::Left) {
+            phi -= mouse_delta_position().x;
+            theta += mouse_delta_position().y;
+        }
+
         set_camera(&Camera3D {
-            position: spherical_to_cartesian(radius, theta, phi),
+            position: to_xzy(spherical_to_cartesian(radius, theta, phi)),
             up: vec3(0.0, 1.0, 0.0),
             target: vec3(0.0, 0.0, 0.0),
             ..Default::default()
