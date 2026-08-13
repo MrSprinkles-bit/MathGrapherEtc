@@ -1,8 +1,9 @@
+mod grid;
 mod general_shapes;
 
-use std::f32::consts::PI;
+use macroquad::prelude::*;
 
-use macroquad::{input::KeyCode::LeftShift, prelude::*};
+use crate::grid::draw_graphing_area;
 
 fn spherical_to_cartesian(radius: f32, theta: f32, phi: f32) -> Vec3 {
     return vec3(
@@ -41,14 +42,7 @@ async fn main() {
             ..Default::default()
         });
 
-        // All temp. ASP this will all be a one call draw function.
-        // Draw grid... duh
-        draw_grid(20, 1.0, DARKGRAY, LIGHTGRAY);
-
-        // Major axis arrows
-        general_shapes::draw_arrow_rot(vec3(0.0, -10.0, 0.0), vec3(0.0, 0.0, 0.0), 0.08, 0.25, 20.0, 0.95, None, LIGHTGRAY);
-        general_shapes::draw_arrow_rot(vec3(-10.0, 0.0, 0.0), vec3(0.0, 0.0, -PI / 2.0), 0.08, 0.25, 20.0, 0.95, None, LIGHTGRAY);
-        general_shapes::draw_arrow_rot(vec3(0.0, 0.0, 10.0), vec3(-PI / 2.0, 0.0, 0.0), 0.08, 0.25, 20.0, 0.95, None, LIGHTGRAY);
+        draw_graphing_area();
 
         set_default_camera();
         draw_text("I LOVE DANNYYYYY", screen_height() / 2.0 - 60.0, 20.0, 30.0, DARKGRAY);
