@@ -1,4 +1,8 @@
+use std::vec;
+
 use macroquad::prelude::*;
+
+use crate::utils::{matrix_from_quat, matrix_from_xyz};
 
 // This was genuinely the hardest thing i've implimented yet - Sam 8/11/2026 12:41AM
 pub trait MeshRot {
@@ -24,7 +28,6 @@ pub fn apply_matrix<F>(matrix: Mat4, draw: F) where F: FnOnce() {
     draw();
     gl.quad_gl.pop_model_matrix();
 }
-
 
 /// Draws a cylinder according to the given transformation matrix.
 pub fn draw_cylinder_matrix(
@@ -55,9 +58,7 @@ pub fn draw_cylinder_quat(
     texture: Option<&Texture2D>, 
     color: Color
 ) {
-    let translation = Mat4::from_translation(position);
-    let rotation = Mat4::from_quat(quaternion);
-    let matrix = translation * rotation;
+    let matrix = matrix_from_quat(position, quaternion, vec3(1.0, 1.0, 1.0));
     draw_cylinder_matrix(matrix, radius_top, radius_bottom, height, texture, color);
 }
 
@@ -71,11 +72,7 @@ pub fn draw_cylinder_rot(
     texture: Option<&Texture2D>, 
     color: Color
 ) {
-    let translation = Mat4::from_translation(position);
-    let rotation_x = Mat4::from_rotation_x(rotation.x);
-    let rotation_y = Mat4::from_rotation_y(rotation.y);
-    let rotation_z = Mat4::from_rotation_z(rotation.z);
-    let matrix = translation * rotation_x * rotation_y * rotation_z;
+    let matrix = matrix_from_xyz(position, rotation, vec3(1.0, 1.0, 1.0));
     draw_cylinder_matrix(matrix, radius_top, radius_bottom, height, texture, color);
 }
 
@@ -144,7 +141,7 @@ pub fn draw_arrow_quad(
     texture: Option<&Texture2D>,
     color: Color
 ) {
-    let matrix = Mat4::from_rotation_translation(quaternion, position);
+    let matrix = matrix_from_quat(position, quaternion, vec3(1.0, 1.0, 1.0));
     draw_arrow_matrix(matrix, radius_shaft, radius_tip, length, ratio, texture, color);
 }
 
@@ -158,10 +155,6 @@ pub fn draw_arrow_rot(
     texture: Option<&Texture2D>,
     color: Color
 ) {
-    let translation = Mat4::from_translation(position);
-    let rotation_x = Mat4::from_rotation_x(rotation.x);
-    let rotation_y = Mat4::from_rotation_y(rotation.y);
-    let rotation_z = Mat4::from_rotation_z(rotation.z);
-    let matrix = translation * rotation_x * rotation_y * rotation_z;
+    let matrix = matrix_from_xyz(position, rotation, vec3(1.0, 1.0, 1.0));
     draw_arrow_matrix(matrix, radius_shaft, radius_tip, length, ratio, texture, color);
 }
