@@ -1,8 +1,6 @@
-use std::vec;
-
 use macroquad::prelude::*;
 
-use crate::utils::{matrix_from_quat, matrix_from_xyz};
+use crate::helpers::{matrix_from_quat, matrix_from_xyz};
 
 // This was genuinely the hardest thing i've implimented yet - Sam 8/11/2026 12:41AM
 pub trait MeshRot {
