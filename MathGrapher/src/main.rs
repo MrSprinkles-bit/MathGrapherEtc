@@ -1,6 +1,6 @@
 mod grid;
 mod general_shapes;
-mod utils;
+mod helpers;
 
 use macroquad::prelude::*;
 
