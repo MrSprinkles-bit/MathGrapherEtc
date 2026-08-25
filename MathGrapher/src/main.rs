@@ -2,15 +2,19 @@ mod grid;
 mod general_shapes;
 mod helpers;
 
+use std::f32::consts::PI;
+
 use macroquad::prelude::*;
 
 use crate::grid::draw_graphing_area;
 
-fn spherical_to_cartesian(radius: f32, theta: f32, phi: f32) -> Vec3 {
+fn camera_spherical_to_cartesian(radius: f32, mut pitch: f32, yaw: f32) -> Vec3 {
+    pitch = clamp(pitch, 0.0 + 0.0001, PI - 0.0001);
+    println!("{}", pitch);
     return vec3(
-        radius * theta.sin() * phi.cos(),
-        radius * theta.sin() * phi.sin(),
-        radius * theta.cos()
+        radius * pitch.sin() * yaw.cos(),
+        radius * pitch.sin() * yaw.sin(),
+        radius * pitch.cos()
     )
 }
 
@@ -37,7 +41,7 @@ async fn main() {
         }
 
         set_camera(&Camera3D {
-            position: to_xzy(spherical_to_cartesian(radius, theta, phi)),
+            position: to_xzy(camera_spherical_to_cartesian(radius, theta, phi)),
             up: vec3(0.0, 1.0, 0.0),
             target: vec3(0.0, 0.0, 0.0),
             ..Default::default()
