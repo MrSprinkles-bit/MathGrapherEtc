@@ -23,7 +23,7 @@ async fn main() {
         camera.update();
         set_camera(&camera.to_macro_camera());
 
-        draw_graphing_area();
+        draw_graphing_area(20);
 
         set_default_camera();
         draw_text("I LOVE DANNYYYYY", screen_height() / 2.0 - 60.0, 20.0, 30.0, DARKGRAY);
