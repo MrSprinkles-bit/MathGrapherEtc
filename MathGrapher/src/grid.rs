@@ -54,7 +54,7 @@ fn draw_y_labels(range: i32, text_scale: f32, steps: usize) {
   let font_size = text_scale as u16;
   let font_scale = 1.0 / text_scale;
 
-  for i in ((-range/2)..(range/2)).step_by(steps) {
+  for i in ((-range/2)..=(range/2)).step_by(steps) {
     if i == 0 {
       continue;
     }
