@@ -54,7 +54,7 @@ impl OrbitCamera {
 
         return Camera3D {
             position: helpers::to_xzy(self.target + pos),
-            target: self.target,
+            target: helpers::to_xzy(self.target),
             up: vec3(0.0,1.0,0.0),
             fovy: self.fov,
             ..Default::default()
