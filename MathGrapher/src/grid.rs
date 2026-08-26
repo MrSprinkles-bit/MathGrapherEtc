@@ -82,6 +82,7 @@ fn draw_y_labels(range: i32, text_scale: f32, steps: usize) {
   }
 }
 
+/// expected grid dimensions are half of range
 pub fn draw_graphing_area(range: i32) {
   let frange = range as f32;
 
