@@ -156,3 +156,20 @@ pub fn draw_arrow_rot(
     let matrix = matrix_from_xyz(position, rotation, vec3(1.0, 1.0, 1.0));
     draw_arrow_matrix(matrix, radius_shaft, radius_tip, length, ratio, texture, color);
 }
+
+/// Vertex indices go left to right
+/// Num of vertices must be >2
+pub fn draw_n_vertex_line(
+    vertices: &[Vertex]
+) {
+    // num vertices
+    let n = vertices.len();
+    assert!(n>2, "Number of vertices must be larger than 2");
+    // [0,1, 1,2, 2,3, ...]
+    let indices: Vec<u16> = (0..n-1).flat_map(|x| [x as u16, (x + 1) as u16]).collect();
+    println!("{:?}", n);
+    let gl = unsafe { get_internal_gl() };
+    gl.quad_gl.texture(None);
+    gl.quad_gl.draw_mode(DrawMode::Lines);
+    gl.quad_gl.geometry(&vertices, &indices);
+}
