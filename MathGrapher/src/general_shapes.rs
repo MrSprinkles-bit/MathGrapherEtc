@@ -1,5 +1,3 @@
-use std::vec;
-
 use macroquad::prelude::*;
 
 use crate::helpers::{matrix_from_quat, matrix_from_xyz};
