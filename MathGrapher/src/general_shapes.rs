@@ -1,3 +1,5 @@
+use std::vec;
+
 use macroquad::prelude::*;
 
 use crate::helpers::{matrix_from_quat, matrix_from_xyz};
@@ -129,7 +131,7 @@ pub fn draw_arrow_matrix(
     draw_cone_matrix(new_matrix, radius_tip, tip_height, texture, color);
 }
 
-pub fn draw_arrow_quad(
+pub fn draw_arrow_quat(
     position: Vec3,
     quaternion: Quat,
     radius_shaft: f32,
@@ -171,5 +173,46 @@ pub fn draw_n_vertex_line(
     let gl = unsafe { get_internal_gl() };
     gl.quad_gl.texture(None);
     gl.quad_gl.draw_mode(DrawMode::Lines);
+    gl.quad_gl.geometry(&vertices, &indices);
+}
+
+pub fn draw_triangle(
+    v1: Vec3,
+    v2: Vec3,
+    v3: Vec3,
+    color: Color
+) {
+    let vertices = [
+        Vertex::new2(v1,vec2(0.,0.), color),
+        Vertex::new2(v2,vec2(0.,0.), color),
+        Vertex::new2(v3,vec2(0.,0.), color),
+    ];
+    let indices = [0,1,2];
+
+    let gl = unsafe { get_internal_gl() };
+
+    gl.quad_gl.texture(None);
+    gl.quad_gl.draw_mode(DrawMode::Triangles);
+    gl.quad_gl.geometry(&vertices, &indices);
+}
+
+pub fn draw_quad(
+    v1: Vertex,
+    v2: Vertex,
+    v3: Vertex,
+    v4: Vertex,
+) {
+    let vertices = [
+        v1,
+        v2,
+        v3,
+        v4
+    ];
+    let indices = [0,1,2,0,2,3];
+
+    let gl = unsafe { get_internal_gl() };
+
+    gl.quad_gl.texture(None);
+    gl.quad_gl.draw_mode(DrawMode::Triangles);
     gl.quad_gl.geometry(&vertices, &indices);
 }
